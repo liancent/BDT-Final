@@ -1,15 +1,20 @@
 import csv
 import json
-
+from db_inserter import MongoDBInserter
 class DataParser:
+
+    inserter = MongoDBInserter()
+
     def __init__(self):
         None
 
     def parser(self):
+
+        self.inserter.drop_collection()
+
         with open('Crash_Reporting_-_drivers_Data.csv', 'r') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
 
-            counter = 0
             for i in csv_reader:
                 data = dict.fromkeys([
                     'acrs_report_type',
@@ -61,12 +66,8 @@ class DataParser:
                     data['vehicle_make'] = i[37]
                 if i[38] is not None:
                     data['vehicle_mode'] = i[38]
-                print(json.dumps(data, indent=4))
-                if counter == 10:
-                    break
-                counter +=1
-
+                
+                self.inserter.insert_data(data)
 
 data_parser= DataParser()
 data_parser.parser()
-
