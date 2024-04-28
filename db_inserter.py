@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from pymongo import InsertOne
+import yaml
 
 class MongoDBInserter:
     client = MongoClient("localhost", 27017)

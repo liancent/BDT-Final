@@ -8,11 +8,9 @@ class DataParser:
     def __init__(self):
         None
 
-    def parser(self):
+    def parser(self, md_accident_data):
 
-        self.inserter.drop_collection()
-
-        with open('Crash_Reporting_-_drivers_Data.csv', 'r') as csv_file:
+        with open(md_accident_data, 'r') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
 
             for i in csv_reader:
@@ -68,6 +66,3 @@ class DataParser:
                     data['vehicle_mode'] = i[38]
                 
                 self.inserter.insert_data(data)
-
-data_parser= DataParser()
-data_parser.parser()
